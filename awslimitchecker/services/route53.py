@@ -115,22 +115,22 @@ class _Route53Service(_AwsService):
         self.limits = limits
         return limits
 
-    def _update_limits_from_api(self):
-        """
-        Call the service's API action to retrieve limit/quota information, and
-        update AwsLimit objects in ``self.limits`` with this information.
-        """
-        # TODO: if the service has an API that can retrieve current limit information
-        # i.e. ``DescribeAccountAttributes``, call that action here and update each
-        # relevant AwsLimit object (in ``self.limits``) via its ``._set_api_limit()`` method.
-        # ELSE if the service has no API call for this, remove this method.
-        try:
-            self.connect()
-            resp = self.conn.get_health_check_count()
-        except EndpointConnectionError as ex:
-            logger.warn('Skipping Route53: %s', str(ex))
-            return
-        self.limits['Health Checks']._set_api_limit(resp['HealthCheckCount'])
+#    def _update_limits_from_api(self):
+#        """
+#        Call the service's API action to retrieve limit/quota information, and
+#        update AwsLimit objects in ``self.limits`` with this information.
+#        """
+#        # TODO: if the service has an API that can retrieve current limit information
+#        # i.e. ``DescribeAccountAttributes``, call that action here and update each
+#        # relevant AwsLimit object (in ``self.limits``) via its ``._set_api_limit()`` method.
+#        # ELSE if the service has no API call for this, remove this method.
+#        try:
+#            self.connect()
+#            resp = self.conn.get_health_check_count()
+#        except EndpointConnectionError as ex:
+#            logger.warn('Skipping Route53: %s', str(ex))
+#            return
+#        self.limits['Health Checks']._set_api_limit(resp['HealthCheckCount'])
 
     def required_iam_permissions(self):
         """
